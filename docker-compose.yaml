@@ -1,0 +1,35 @@
+version: '3'
+services:
+  node-app:
+    build: .
+    image: loginpage/node-app
+    ports:
+      - 3000:3000
+    environment:
+      - PORT=3000
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    # environment:
+    #   - MONGO_INITDB_ROOT_USERNAME=dron
+    #   - MONGO_INITDB_ROOT_PASSWORD=pass
+    volumes:
+      - mongo-db:/data/db
+
+  # mongo-express:
+  #   image: mongo-express
+  #   restart: always
+  #   ports:
+  #     - 8080:8081
+  #   environment:
+  #     - ME_CONFIG_MONGODB_ADMINUSERNAME=dron
+  #     - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
+  #     - ME_CONFIG_MONGODB_SERVER=mongo
+      
+volumes:
+  mongo-db:
